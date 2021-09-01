@@ -1,9 +1,8 @@
-CONFIGFILES := config.txt template-slot6 template-slot7
-CONFIGDIR := /opt/retropie/configs/apple2
-INSTALLDIR := /opt/retropie/emulators/gsplus
+FILES := config.txt template-slot6 template-slot7
+CONFIG_PREFIX := /opt/retropie/configs/apple2
+INSTALL_PREFIX := /opt/retropie/emulators/gsplus
 
 install:
-	install ../../build/bin/GSplus ${INSTALLDIR}
-	install gsplus.sh ${INSTALLDIR}
-	install ${CONFIGFILES} ${CONFIGDIR}
+	install gsplus.sh ${INSTALL_PREFIX}
+	install ${FILES} ${CONFIG_PREFIX}
 
