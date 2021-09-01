@@ -9,7 +9,7 @@
 
 rom="$1"
 ext=$(echo "$(basename "$rom")" | sed -E 's/^[^\.]+//')
-exe=/opt/retropie/emulators/gsplus/bin/gsplus
+exe=/opt/retropie/emulators/gsplus/bin/GSplus
 slot=7
 config=/tmp/config.txt
 
