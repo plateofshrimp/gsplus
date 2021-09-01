@@ -36,8 +36,8 @@ case $ext in
 	run_with_config
 	;;
 .dsk)
-	echo "RetroPie: $ext format, will insert into slot $slot."
 	slot=6
+	echo "RetroPie: $ext format, will insert into slot $slot."
 	run_with_template
 	;;
 *)
