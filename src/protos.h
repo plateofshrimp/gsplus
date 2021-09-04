@@ -348,7 +348,7 @@ void paddle_trigger_mouse(double dcycs);
 void paddle_trigger_keypad(double dcycs);
 void paddle_update_trigger_dcycs(double dcycs);
 int read_paddles(double dcycs, int paddle);
-void paddle_update_buttons(void);
+void paddle_update(double dcycs);
 
 
 /* sim65816.c */

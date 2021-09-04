@@ -2129,7 +2129,7 @@ void update_60hz(double dcycs, double dtime_now) {
   {
     imagewriter_update();
   }
-  paddle_update_buttons();
+  paddle_update(dcycs);
 }
 
 void do_vbl_int()      {

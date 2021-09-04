@@ -31,44 +31,26 @@ int g_paddle_val[4] = { 0, 0, 0, 0 };
 double g_paddle_dcycs[4] = { 0.0, 0.0, 0.0, 0.0 };
 /* g_paddle_dcycs are the dcycs the paddle goes to 0 */
 
-
-void paddle_fixup_joystick_type()      {
-  /* If g_joystick_type points to an illegal value, change it */
-  if(g_joystick_type == JOYSTICK_TYPE_NATIVE_1) {
-    g_joystick_native_type = g_joystick_native_type1;
-    if(g_joystick_native_type1 < 0) {
-      g_joystick_type = JOYSTICK_TYPE_KEYPAD;
-      printf("no joy 1 --- switching to keypad\n");
-    }
-  }
-  if(g_joystick_type == JOYSTICK_TYPE_NATIVE_2) {
-    g_joystick_native_type = g_joystick_native_type2;
-    if(g_joystick_native_type2 < 0) {
-      g_joystick_type = JOYSTICK_TYPE_KEYPAD;
-      printf("no joy 2 --- switching to keypad\n");
-    }
-  }
+void paddle_trigger_joystick(double dcycs) {
+  joystick_update(dcycs);
 }
 
 void paddle_trigger(double dcycs)      {
   /* Called by read/write to $c070 */
   g_paddle_trig_dcycs = dcycs;
-
-  /* Determine what all the paddle values are right now */
-  paddle_fixup_joystick_type();
+  g_joystick_type = 2;
 
   switch(g_joystick_type) {
-    case JOYSTICK_TYPE_KEYPAD:                  /* Keypad Joystick */
-      paddle_trigger_keypad(dcycs);
-      break;
-    case JOYSTICK_TYPE_MOUSE:                   /* Mouse Joystick */
-      paddle_trigger_mouse(dcycs);
-      break;
-    case JOYSTICK_TYPE_NONE:                    /* Mouse Joystick */
-      paddle_trigger_mouse(dcycs);
-      break;
-    default:
-      joystick_update(dcycs);
+  case JOYSTICK_TYPE_KEYPAD:                  /* Keypad Joystick */
+    paddle_trigger_keypad(dcycs);
+    break;
+  case JOYSTICK_TYPE_MOUSE:                   /* Mouse Joystick */
+    paddle_trigger_mouse(dcycs);
+    break;
+  case JOYSTICK_TYPE_NATIVE_1:                /* Joystick Joystick! */
+  case JOYSTICK_TYPE_NATIVE_2:
+    paddle_trigger_joystick(dcycs);
+    break;
   }
 }
 
@@ -169,7 +151,6 @@ int read_paddles(double dcycs, int paddle)     {
   }
 }
 
-void paddle_update_buttons()      {
-  paddle_fixup_joystick_type();
-  joystick_update_buttons();
+void paddle_update(double dcycs) {
+  paddle_trigger(dcycs);
 }
